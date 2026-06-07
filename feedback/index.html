@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not suitable - RoleSignal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    .feedback-panel{max-width:760px;margin:0 auto;background:rgba(12,15,24,.88);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.32)}
+    .job-title{font-size:clamp(28px,5vw,48px);line-height:1.02;letter-spacing:-.05em;margin:10px 0 10px}.job-meta{color:var(--muted);font-size:16px;margin-bottom:24px}.reason-list{display:grid;gap:10px;margin:22px 0}.reason{display:flex;gap:12px;align-items:flex-start;padding:14px 14px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(255,255,255,.035)}.reason input{width:20px;height:20px;margin-top:1px;accent-color:#8b5cf6}.reason span{font-weight:600}textarea{width:100%;box-sizing:border-box;min-height:120px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:var(--text);font:inherit;padding:14px;resize:vertical}.notice{font-size:14px;color:var(--muted);line-height:1.5}.error{border-color:rgba(248,113,113,.5);background:rgba(127,29,29,.22)}
+  </style>
+</head>
+<body>
+  <header class="nav"><div class="nav-inner"><a class="brand" href="../index.html"><span class="brand-dot"></span>RoleSignal</a><nav class="nav-links"><a href="../index.html">Home</a><a href="../sample-report.html">Sample report</a><a href="../feedback.html">Feedback</a></nav></div></header>
+  <main>
+    <section class="hero wrap">
+      <div class="feedback-panel" id="app">
+        <span class="eyebrow">Role feedback</span>
+        <h1 class="job-title">Loading feedback form...</h1>
+        <p class="job-meta">Reading the secure job token.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap">RoleSignal feedback closes the loop between recommendations and future ranking.</div></footer>
+<script>
+const API_BASE = 'http://165.227.36.81:8765';
+function decodePayload(token){
+  const body = token.split('.')[0];
+  const padded = body + '='.repeat((4 - body.length % 4) % 4);
+  const json = atob(padded.replace(/-/g, '+').replace(/_/g, '/'));
+  return JSON.parse(decodeURIComponent(escape(json)));
+}
+function esc(s){return String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+const params = new URLSearchParams(location.search);
+const token = params.get('t');
+const app = document.getElementById('app');
+if(!token){
+  app.classList.add('error');
+  app.innerHTML = '<span class="eyebrow">Missing link data</span><h1 class="job-title">This feedback link is incomplete.</h1><p class="notice">Open the Not suitable button from the RoleSignal email so the job token is included.</p>';
+} else {
+  try {
+    const payload = decodePayload(token);
+    const reasons = payload.reasons && payload.reasons.length ? payload.reasons : [{code:'other', label:'Other reason'}];
+    const reasonHtml = reasons.map(r => `<label class="reason"><input type="checkbox" name="reason" value="${esc(r.code)}"><span>${esc(r.label || r.code)}</span></label>`).join('');
+    app.innerHTML = `
+      <span class="eyebrow">Not suitable</span>
+      <h1 class="job-title">Why is this not suitable?</h1>
+      <p class="job-meta">${esc(payload.title || 'Untitled job')} · ${esc(payload.company || 'Unknown company')}</p>
+      <form method="post" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}">
+        <div class="reason-list">${reasonHtml}</div>
+        <p class="notice">Optional note, especially if you choose Other:</p>
+        <textarea name="other_text" placeholder="Write a short reason..."></textarea>
+        <div class="actions" style="justify-content:stretch;margin-top:18px"><button class="button primary" style="width:100%;border:0" type="submit">Send feedback</button></div>
+      </form>
+      <p class="notice" style="margin-top:16px">The form is hosted on GitHub Pages. Submitting sends the feedback to Hermes so future Jamie scans can suppress this job and lightly penalize similar roles.</p>`;
+  } catch(e) {
+    app.classList.add('error');
+    app.innerHTML = '<span class="eyebrow">Invalid link data</span><h1 class="job-title">This feedback link could not be read.</h1><p class="notice">Please use the latest RoleSignal email draft.</p>';
+  }
+}
+</script>
+</body>
+</html>
