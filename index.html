@@ -3,60 +3,105 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>RoleSignal: curated career briefs</title>
+<title>RoleSignal: curated job shortlists</title>
 <style>
-:root{--ink:#101828;--muted:#667085;--soft:#f6f7fb;--card:#fff;--line:#e7ebf2;--blue:#4057ff;--blue-soft:#eef1ff;--green:#0f9f6e;--green-soft:#e9f8f2;--orange:#ff7a45;--orange-soft:#fff0e8;--pink:#eb4a8a;--pink-soft:#fff0f7;--shadow:0 24px 70px rgba(16,24,40,.10),0 8px 22px rgba(16,24,40,.06);--radius:28px}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:radial-gradient(circle at 18% -10%,#dfe5ff 0,#f7f8fc 38%,transparent 62%),linear-gradient(180deg,#fbfcff 0,#f3f5fa 100%);-webkit-font-smoothing:antialiased;line-height:1.4}.page{max-width:1220px;margin:0 auto;padding:28px 22px 76px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:22px;letter-spacing:-.05em}.brand img{width:202px;height:auto;display:block}.mark{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 220deg,#4057ff,#eb4a8a,#ff9e43,#4057ff);box-shadow:0 12px 32px rgba(64,87,255,.25)}.company-hero{display:grid;grid-template-columns:1.02fr .98fr;gap:24px;align-items:stretch;margin:10px 0 28px}.pitch{background:#fff;border:1px solid var(--line);border-radius:38px;padding:38px;box-shadow:var(--shadow);position:relative;overflow:hidden}.pitch:after{content:"";position:absolute;right:-110px;top:-100px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,#dfe5ff 0,#f7ecff 42%,transparent 70%)}.pitch-kicker{display:inline-flex;background:#eef1ff;color:#3346d3;border:1px solid #dfe4ff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900;margin-bottom:18px;position:relative;z-index:1}h1{font-size:66px;line-height:.95;letter-spacing:-.075em;margin-bottom:18px;position:relative;z-index:1}.lead{font-size:20px;color:#59657a;max-width:650px;position:relative;z-index:1}.intel-board{background:#111827;color:white;border-radius:38px;padding:22px;box-shadow:var(--shadow);overflow:hidden}.intel-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;color:#cfd7e6;font-weight:800;font-size:13px}.intel-window{background:#fff;color:var(--ink);border-radius:28px;padding:20px}.intel-window h2{font-size:30px;letter-spacing:-.06em;line-height:1.05;margin-bottom:14px}.signal-row{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;background:#f6f7fb;border:1px solid #e9edf4;border-radius:18px;padding:12px;margin-top:10px}.signal-thumb{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;font-size:24px;background:#eef1ff}.signal-row b{display:block}.signal-row span{display:block;color:var(--muted);font-size:13px;font-weight:700}.signal-score{font-weight:900;color:var(--green)}.value-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 34px}.value-card{background:white;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 12px 32px rgba(16,24,40,.06)}.value-card b{display:block;font-size:18px;letter-spacing:-.04em;margin-bottom:7px}.value-card span{color:#5f6b7d;font-weight:700}.section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:38px 0 16px}.section-title h2{font-size:36px;letter-spacing:-.06em;line-height:1}.section-title p{color:var(--muted);font-weight:650;max-width:470px}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch;margin-bottom:24px}.hero-card{background:rgba(255,255,255,.86);border:1px solid rgba(231,235,242,.92);border-radius:36px;padding:34px;box-shadow:var(--shadow);overflow:hidden;position:relative}.hero-card:after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,rgba(64,87,255,.18),rgba(235,74,138,.12));filter:blur(2px)}.kicker{display:inline-flex;gap:8px;align-items:center;background:var(--blue-soft);color:#3346d3;border:1px solid #dfe4ff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900;margin-bottom:18px}.hero-card h2{font-size:54px;line-height:.97;letter-spacing:-.07em;margin-bottom:18px;position:relative;z-index:1}.owner-line{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}.owner-pill{background:white;border:1px solid var(--line);border-radius:18px;padding:12px 14px;min-width:158px}.owner-pill span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}.owner-pill b{font-size:17px;letter-spacing:-.03em}.score-card{background:white;border:1px solid var(--line);border-radius:36px;overflow:hidden;box-shadow:var(--shadow);padding:24px}.snapshot-list{display:grid;gap:10px}.snapshot-item{border-radius:18px;border:1px solid #e7ebf2;background:#f6f7fb;padding:15px}.snapshot-item.good{background:var(--green-soft);border-color:#ccefe2}.snapshot-item.warn{background:var(--orange-soft);border-color:#ffd7c7}.snapshot-item span{display:block;text-transform:uppercase;font-size:12px;color:#667085;font-weight:900;letter-spacing:.06em}.snapshot-item b{display:block;margin-top:3px}.plain-note{color:#5f6b7d;font-weight:650;margin-top:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 14px 40px rgba(16,24,40,.07);overflow:hidden}.card-pad,.big-panel{padding:24px}.badge{display:inline-flex;border-radius:999px;padding:7px 10px;background:var(--blue-soft);color:#3346d3;font-size:12px;font-weight:900;margin-bottom:13px}.badge.green{background:var(--green-soft);color:#08724e}.badge.orange{background:var(--orange-soft);color:#b94b17}.badge.pink{background:var(--pink-soft);color:#b42364}.card h3{font-size:24px;line-height:1.05;letter-spacing:-.055em;margin-bottom:12px}.card p{color:#5f6b7d;font-weight:650}.metric-strip{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}.mini-metric{background:#f6f7fb;border:1px solid #eef1f5;border-radius:16px;padding:10px 12px;min-width:92px}.mini-metric b{display:block;font-size:22px;letter-spacing:-.05em}.mini-metric span{display:block;color:var(--muted);font-size:12px;font-weight:800}.wide{display:grid;grid-template-columns:1fr .9fr;gap:16px;align-items:stretch}.list{display:grid;gap:13px;margin-top:18px}.list-item{display:grid;grid-template-columns:46px 1fr;gap:13px;align-items:center;background:#f8f9fc;border:1px solid #edf0f5;border-radius:20px;padding:12px}.number{width:46px;height:46px;border-radius:15px;background:white;display:grid;place-items:center;font-weight:900;color:#3f50d7}.list-item b{display:block;font-size:16px;margin-bottom:2px}.list-item span{display:block;color:var(--muted);font-size:13px;font-weight:650}.email-card{padding:22px}.role-row{background:#f8f9fc;border:1px solid #edf0f5;border-radius:20px;padding:16px;margin-top:12px}.role-row strong{display:block;font-size:18px}.role-meta{color:#667085;font-size:13px;font-weight:700;margin:4px 0 10px}.role-actions{display:flex;gap:8px;flex-wrap:wrap}.pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;background:#111827;color:white}.pill.light{background:white;color:#344054;border:1px solid #e7ebf2}.pill.blue{background:#eef1ff;color:#3346d3}.footer{margin-top:26px;background:#111827;color:white;border-radius:30px;padding:30px;box-shadow:var(--shadow)}.footer h2{font-size:34px;line-height:1.05;letter-spacing:-.06em;margin-bottom:10px}.footer p{color:#d7deea;font-weight:650;max-width:760px}.pricing{margin-top:16px;background:white;color:var(--ink);border-radius:24px;padding:20px;max-width:360px}.price{font-size:42px;font-weight:900;letter-spacing:-.06em}.price span{font-size:16px;color:#667085}.pricing ul{margin:12px 0 0 20px;color:#475467;font-weight:700}.pricing li{margin:6px 0}@media(max-width:950px){.company-hero,.hero,.wide{grid-template-columns:1fr}.value-strip,.grid-3{grid-template-columns:1fr}h1{font-size:52px}.hero-card h2{font-size:42px}}@media(max-width:560px){.page{padding:18px 14px 48px}.brand img{width:170px}.pitch,.hero-card{padding:24px;border-radius:28px}h1{font-size:42px}.lead{font-size:17px}.section-title{display:block}.section-title p{margin-top:8px}}
+:root{--bg:#0b1020;--panel:#111827;--card:#f8fafc;--ink:#0f172a;--muted:#64748b;--line:#dbe3ef;--blue:#5266ff;--blue2:#eef2ff;--green:#0f8a66;--green2:#e8f7f1;--orange:#b45309;--orange2:#fff7ed;--shadow:0 24px 80px rgba(0,0,0,.28);--radius:28px}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at 20% 0,#1d2a64 0,#0b1020 42%,#080b14 100%);color:white;-webkit-font-smoothing:antialiased;line-height:1.45}.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 56px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:54px}.logo{width:210px;height:auto;display:block}.tag{border:1px solid rgba(255,255,255,.16);color:#cbd5e1;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800}.hero{display:grid;grid-template-columns:1fr 440px;gap:34px;align-items:center;margin-bottom:64px}.eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(82,102,255,.18);color:#cbd5ff;border:1px solid rgba(150,164,255,.28);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:900;margin-bottom:18px}.hero h1{font-size:70px;line-height:.92;letter-spacing:-.075em;margin:0 0 20px;max-width:690px}.lead{font-size:21px;color:#cbd5e1;max-width:650px;margin:0 0 28px}.bullets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:720px}.bullet{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px}.bullet b{display:block;font-size:14px;margin-bottom:4px}.bullet span{display:block;color:#aab6ca;font-size:13px}.preview{background:#fff;color:var(--ink);border-radius:32px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.18)}.preview-head{background:#111827;color:white;border-radius:22px;padding:18px;margin-bottom:18px}.preview-head img{width:156px;height:auto;margin-bottom:14px}.preview-head b{display:block;font-size:13px;color:#aab6ff;text-transform:uppercase;letter-spacing:.08em}.preview-head h2{font-size:25px;line-height:1.05;margin:8px 0 0;letter-spacing:-.04em}.mini-role{border:1px solid var(--line);border-radius:20px;padding:16px}.score{font-size:12px;color:#4057ff;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.mini-role h3{font-size:20px;line-height:1.15;margin:7px 0 5px}.meta{font-size:13px;color:var(--muted);margin-bottom:10px}.mini-role p{margin:0 0 12px;color:#334155;font-size:14px}.actions{display:flex;gap:7px;flex-wrap:wrap}.pill{display:inline-flex;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:900;background:#111827;color:#fff}.pill.light{background:#f1f5f9;color:#334155}.pill.blue{background:#eef2ff;color:#4057ff}.section{margin:0 0 64px}.section h2{font-size:42px;line-height:1;letter-spacing:-.055em;margin:0 0 10px}.section>p{color:#b7c3d5;font-size:18px;margin:0 0 24px;max-width:720px}.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.example{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:28px;padding:20px;min-height:420px;display:flex;flex-direction:column}.example .label{align-self:flex-start;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;margin-bottom:14px}.blue{background:var(--blue2);color:#4057ff}.green{background:var(--green2);color:var(--green)}.orange{background:var(--orange2);color:var(--orange)}.example h3{font-size:24px;line-height:1.1;letter-spacing:-.035em;margin:0 0 7px}.example .where{font-size:13px;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px}.example p{font-size:15px;color:#334155;margin:0 0 13px}.example strong{color:#111827}.example .why{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;margin-top:auto}.why b{display:block;font-size:13px;margin-bottom:5px}.why span{display:block;color:#475569;font-size:13px}.steps{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:28px;padding:24px}.panel h3{font-size:25px;margin:0 0 14px;letter-spacing:-.035em}.check{display:grid;gap:11px}.check div{display:flex;gap:10px;color:#cbd5e1}.check b{color:white}.price{background:white;color:var(--ink);border-radius:30px;padding:24px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;border:1px solid var(--line)}.price h2{font-size:34px;margin:0 0 6px;letter-spacing:-.05em}.price p{margin:0;color:#475569}.amount{text-align:right;font-size:46px;font-weight:950;letter-spacing:-.06em}.amount span{display:block;font-size:15px;color:#64748b;letter-spacing:0;font-weight:800}.note{color:#93a4bb;font-size:13px;margin-top:18px;text-align:center}@media(max-width:900px){.hero{grid-template-columns:1fr}.hero h1{font-size:50px}.bullets,.examples,.steps,.price{grid-template-columns:1fr}.amount{text-align:left}.top{align-items:flex-start;gap:16px;flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="page">
-  <header class="topbar"><div class="brand"><img src="assets/rolesignal-logo.png" alt="RoleSignal"></div></header>
-  <section class="company-hero">
-    <div class="pitch">
-      <div class="pitch-kicker">Career intelligence for people who do not want another job board</div>
-      <h1>Know which roles are worth your time before you start applying.</h1>
-      <p class="lead">RoleSignal turns noisy job searches into a short, ranked email brief with plain-English fit notes, realistic step-up roles, and feedback buttons that make tomorrow’s shortlist smarter.</p>
-    </div>
-    <div class="intel-board">
-      <div class="intel-top"><span>Latest career brief</span><span>206 roles scanned</span></div>
-      <div class="intel-window">
-        <h2>Inside each RoleSignal brief</h2>
-        <div class="signal-row"><div class="signal-thumb">🎯</div><div><b>Ranked matches, not search results</b><span>Remote eligibility, salary, source quality, and role fit are scored before anything reaches the inbox.</span></div><div class="signal-score">rank</div></div>
-        <div class="signal-row"><div class="signal-thumb">👀</div><div><b>Picture yourself</b><span>Each role gets a concrete day-in-the-life sentence so the work feels real, not generic.</span></div><div class="signal-score">see</div></div>
-        <div class="signal-row"><div class="signal-thumb">🚀</div><div><b>Take the leap</b><span>Plausible stretch roles are marked clearly, then shown below stronger core matches.</span></div><div class="signal-score">grow</div></div>
+<div class="wrap">
+  <header class="top">
+    <img class="logo" src="assets/rolesignal-logo.png" alt="RoleSignal">
+    <div class="tag">Weekly curated job briefs</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Remote Canada job search · ranked before it hits your inbox</div>
+        <h1>Stop opening every job post.</h1>
+        <p class="lead">RoleSignal scans noisy job boards and sends a short email with roles that are actually worth checking first.</p>
+        <div class="bullets">
+          <div class="bullet"><b>Source links</b><span>Open the real posting, not a search result.</span></div>
+          <div class="bullet"><b>Plain fit notes</b><span>What the role would feel like day to day.</span></div>
+          <div class="bullet"><b>Feedback buttons</b><span>Pass or mark a miss so the next brief improves.</span></div>
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="value-strip">
-    <div class="value-card"><b>Keep the source job one click away.</b><span>Open role takes you to the original posting source, not a search page.</span></div>
-    <div class="value-card"><b>Train the ranking with one tap.</b><span>Pass hides an exact job. Not interested teaches the algorithm what to demote next.</span></div>
-    <div class="value-card"><b>Made for busy applicants.</b><span>Clean weekly shortlists with enough context to choose what is worth applying to first.</span></div>
-  </section>
-  <div class="section-title"><h2>Preview a career brief</h2><p>A clean email for the recipient, plus a separate developer view with scoring and tuning notes.</p></div>
-  <section class="hero">
-    <div class="hero-card">
-      <div class="kicker">RoleSignal job brief · June 7, 2026</div>
-      <h2>Your strongest analyst roles are ready.</h2>
-      <p class="lead">The shortlist keeps high-fit roles up top, filters noisy or ineligible postings, and explains what the job would actually feel like.</p>
-      <div class="owner-line"><div class="owner-pill"><span>Scanned</span><b>206 roles</b></div><div class="owner-pill"><span>Shortlisted</span><b>10 client-ready</b></div><div class="owner-pill"><span>Feedback</span><b>learns daily</b></div></div>
-    </div>
-    <aside class="score-card">
-      <div class="snapshot-list"><div class="snapshot-item good"><span>Strongest signal</span><b>Business analyst work with clear remote Canada eligibility</b></div><div class="snapshot-item warn"><span>Worth demoting</span><b>Low-quality sources, vague fit, wrong industry context</b></div><div class="snapshot-item"><span>Next move</span><b>Open role, Pass, or Not interested</b></div></div>
-      <p class="plain-note">Every click changes what appears next: exact jobs can disappear, similar misses can drop, and better-fit patterns rise.</p>
-    </aside>
-  </section>
-  <div class="section-title"><h2>What the brief highlights</h2><p>The recipient gets the useful context without the internal development notes.</p></div>
-  <section class="grid-3">
-    <article class="card"><div class="card-pad"><span class="badge green">Picture yourself</span><h3>Make the role tangible.</h3><p>Instead of generic fit language, RoleSignal describes a realistic moment from the job: the meeting, system, workflow, or decision the person would own.</p><div class="metric-strip"><div class="mini-metric"><b>1</b><span>clear scenario</span></div><div class="mini-metric"><b>0</b><span>job-board fluff</span></div></div></div></article>
-    <article class="card"><div class="card-pad"><span class="badge orange">Take the leap</span><h3>Show stretch roles without overselling them.</h3><p>Step-up roles can appear when plausible, but they are labelled and kept below stronger core matches.</p><div class="metric-strip"><div class="mini-metric"><b>badge</b><span>visible cue</span></div><div class="mini-metric"><b>score</b><span>still matters</span></div></div></div></article>
-    <article class="card"><div class="card-pad"><span class="badge pink">Feedback loop</span><h3>Pass or Not interested tunes the next email.</h3><p>Pass removes the exact role. Not interested captures why, then demotes similar misses in future ranked output.</p><div class="metric-strip"><div class="mini-metric"><b>tap</b><span>fast feedback</span></div><div class="mini-metric"><b>next</b><span>smarter brief</span></div></div></div></article>
-  </section>
-  <div class="section-title"><h2>What to do with each role</h2></div>
-  <section class="wide">
-    <div class="card big-panel"><h3>Three clean choices</h3><div class="list"><div class="list-item"><div class="number">1</div><div><b>Open role</b><span>Go straight to the source job page to verify and apply.</span></div></div><div class="list-item"><div class="number">2</div><div><b>Pass</b><span>Hide this exact posting from the next email without changing broader preferences.</span></div></div><div class="list-item"><div class="number">3</div><div><b>Not interested</b><span>Tell RoleSignal why it missed so similar roles rank lower next time.</span></div></div></div></div>
-    <div class="card email-card"><span class="badge green">Example role card</span><div class="role-row"><strong>Business Operations Analyst</strong><div class="role-meta">Company line · Located line · salary · source</div><p>Picture yourself turning a messy operational handoff into a clear workflow, dashboard, and decision path.</p><div class="role-actions"><span class="pill">Open role</span><span class="pill light">Pass</span><span class="pill blue">Not interested</span></div></div><div class="role-row"><strong>Product Operations Lead <span class="badge orange">Take the leap</span></strong><div class="role-meta">Stretch role · still ranked by score</div><p>The leap involves owning a process lane, coordinating stakeholders, and carrying more accountability for the outcome.</p></div></div>
-  </section>
-  <section class="footer"><h2>One simple monthly price.</h2><p>RoleSignal is built for a focused, recurring job search: one clean brief, one feedback loop, and a ranking model that improves as you click.</p><div class="pricing"><span class="badge">RoleSignal</span><div class="price">CAD $29<span>/month</span></div><ul><li>Weekly curated role shortlist</li><li>Source job links</li><li>Picture yourself context</li><li>Take the leap badges</li><li>Pass and Not interested ranking feedback</li><li>Separate developer and client email drafts</li></ul></div></section>
+      <aside class="preview" aria-label="Email preview">
+        <div class="preview-head">
+          <img src="assets/rolesignal-logo.png" alt="RoleSignal">
+          <b>RoleSignal · June 7, 2026</b>
+          <h2>Your job shortlist is ready</h2>
+        </div>
+        <div class="mini-role">
+          <div class="score">#1 · 91/100</div>
+          <h3>Senior People Operations Analyst</h3>
+          <div class="meta">Remote · 3 days ago · Estimated CAD $65k–$85k · Indeed</div>
+          <p><strong>Picture yourself</strong> keeping HRIS data, payroll, onboarding, and offboarding clean enough for leaders to trust every handoff.</p>
+          <div class="actions"><span class="pill">Open role</span><span class="pill light">Pass</span><span class="pill blue">Not suitable</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <h2>Three searches RoleSignal is built for.</h2>
+      <p>Different job types need different filters. These are the kinds of examples that show up in the email, with the same clean card style.</p>
+      <div class="examples">
+        <article class="example">
+          <div class="label blue">People operations</div>
+          <h3>People / HR Operations Analyst</h3>
+          <div class="where">Remote Canada · HRIS, payroll, onboarding, reporting</div>
+          <p><strong>Good signal:</strong> analyst work with systems, data quality, handoffs, and internal stakeholders.</p>
+          <p><strong>Watch for:</strong> roles that are mostly recruiting coordination or benefits administration.</p>
+          <div class="why"><b>Example output</b><span>“Picture yourself keeping HRIS data, payroll, onboarding, and offboarding clean enough for People leaders to trust every handoff.”</span></div>
+        </article>
+        <article class="example">
+          <div class="label green">Operations and supply chain</div>
+          <h3>Business Operations Analyst</h3>
+          <div class="where">Remote / hybrid · inventory, process, dashboards, vendors</div>
+          <p><strong>Good signal:</strong> messy workflows that need requirements, Excel/BI, process maps, and decisions.</p>
+          <p><strong>Watch for:</strong> warehouse supervisor jobs or pure customer-service queues disguised as analyst roles.</p>
+          <div class="why"><b>Example output</b><span>“Picture yourself leading an inventory call, reconciling forecasts to actuals, and explaining shortages before service levels slip.”</span></div>
+        </article>
+        <article class="example">
+          <div class="label orange">AI and systems</div>
+          <h3>AI / Automation Business Analyst</h3>
+          <div class="where">Remote Canada · Copilot, Power Automate, RPA, SQL, Jira</div>
+          <p><strong>Good signal:</strong> turning stakeholder needs into workflows, prototypes, requirements, and adoption plans.</p>
+          <p><strong>Take the leap:</strong> product owner or systems lead roles can appear, but they are labelled as stretch roles.</p>
+          <div class="why"><b>Example output</b><span>“Picture yourself turning SMEs’ process notes into AI, RPA, and low-code requirements, then proving value with dashboards.”</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section steps">
+      <div class="panel">
+        <h3>What gets cut</h3>
+        <div class="check">
+          <div><b>×</b><span>Old postings and unclear junk sources</span></div>
+          <div><b>×</b><span>Roles that are not Canada-eligible</span></div>
+          <div><b>×</b><span>Low-fit jobs below the email quality floor</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>What you click</h3>
+        <div class="check">
+          <div><b>Open role</b><span>Check the original source posting.</span></div>
+          <div><b>Pass</b><span>Hide that exact job next time.</span></div>
+          <div><b>Not suitable</b><span>Tell RoleSignal what to demote.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="price" aria-label="Pricing">
+      <div>
+        <h2>CAD $29/month.</h2>
+        <p>One weekly curated shortlist, source links, fit notes, stretch-role labels, and feedback tuning.</p>
+      </div>
+      <div class="amount">$29<span>CAD / month</span></div>
+    </section>
+    <p class="note">No giant job dashboard. Just the email you need to decide what to open first.</p>
+  </main>
 </div>
 </body>
 </html>
