@@ -48,36 +48,29 @@ if(!token){
 } else {
   try {
     const payload = decodePayload(token);
-    if(action === 'pass'){
+    const isPass = action === 'pass' || payload.intent === 'pass';
+    if(isPass){
       app.innerHTML = `
         <span class="eyebrow">Passed for now</span>
         <h1 class="job-title">We'll skip this one tomorrow.</h1>
         <p class="job-meta">${esc(payload.title || 'Untitled job')} · ${esc(payload.company || 'Unknown company')}</p>
-        <p class="notice">Pass hides this exact job from the next email. It does not teach the algorithm that similar roles are bad.</p>
-        <form id="feedback-form" method="post" target="rolesignal-feedback-sink" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}">
+        <p class="notice">Pass hides this exact job from tomorrow's email. It does not teach the algorithm that similar roles are bad.</p>
+        <form id="feedback-form" method="post" target="rolesignal-feedback-sink" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}&action=pass" style="display:none">
           <input type="hidden" name="reason" value="pass">
-          <div class="actions" style="justify-content:stretch;margin-top:18px"><button id="send-button" class="button primary" style="width:100%;border:0" type="submit">Confirm pass</button></div>
         </form>
         <iframe name="rolesignal-feedback-sink" id="rolesignal-feedback-sink" title="feedback submit target" style="display:none"></iframe>
-        <p id="submit-status" class="notice" style="margin-top:16px">Click once to save the pass without leaving this page.</p>`;
+        <p id="submit-status" class="status">Saving pass to Hermes...</p>`;
       const form = document.getElementById('feedback-form');
-      const button = document.getElementById('send-button');
       const status = document.getElementById('submit-status');
       const frame = document.getElementById('rolesignal-feedback-sink');
       let submitted = false;
-      form.addEventListener('submit', () => {
-        submitted = true;
-        button.disabled = true;
-        button.textContent = 'Saving...';
-        status.className = 'status';
-        status.textContent = 'Saving pass to Hermes...';
-      });
       frame.addEventListener('load', () => {
         if(!submitted) return;
         status.className = 'status success';
-        status.textContent = 'Pass saved. This exact job will be kept out of the next email cycle.';
-        button.textContent = 'Pass saved';
+        status.textContent = 'Pass saved. This exact job will be kept out of tomorrow\'s results. You can close this page.';
       });
+      submitted = true;
+      form.submit();
     } else {
     const reasons = payload.reasons && payload.reasons.length ? payload.reasons : [{code:'other', label:'Other reason'}];
     const reasonHtml = reasons.map(r => `<label class="reason"><input type="checkbox" name="reason" value="${esc(r.code)}"><span>${esc(r.label || r.code)}</span></label>`).join('');
