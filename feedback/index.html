@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../assets/styles.css">
   <style>
     .feedback-panel{max-width:760px;margin:0 auto;background:rgba(12,15,24,.88);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.32)}
-    .job-title{font-size:clamp(28px,5vw,48px);line-height:1.02;letter-spacing:-.05em;margin:10px 0 10px}.job-meta{color:var(--muted);font-size:16px;margin-bottom:24px}.reason-list{display:grid;gap:10px;margin:22px 0}.reason{display:flex;gap:12px;align-items:flex-start;padding:14px 14px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(255,255,255,.035)}.reason input{width:20px;height:20px;margin-top:1px;accent-color:#8b5cf6}.reason span{font-weight:600}textarea{width:100%;box-sizing:border-box;min-height:120px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:var(--text);font:inherit;padding:14px;resize:vertical}.notice{font-size:14px;color:var(--muted);line-height:1.5}.error{border-color:rgba(248,113,113,.5);background:rgba(127,29,29,.22)}
+    .job-title{font-size:clamp(28px,5vw,48px);line-height:1.02;letter-spacing:-.05em;margin:10px 0 10px}.job-meta{color:var(--muted);font-size:16px;margin-bottom:24px}.flag-box{margin:18px 0;padding:16px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(255,255,255,.035)}.flag-box h2{font-size:15px;margin:0 0 10px}.flag-box ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.45}.reason-list{display:grid;gap:10px;margin:22px 0}.reason{display:flex;gap:12px;align-items:flex-start;padding:14px 14px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(255,255,255,.035)}.reason input{width:20px;height:20px;margin-top:1px;accent-color:#8b5cf6}.reason span{font-weight:600}textarea{width:100%;box-sizing:border-box;min-height:120px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:var(--text);font:inherit;padding:14px;resize:vertical}.notice{font-size:14px;color:var(--muted);line-height:1.5}.status{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25)}.success{border-color:rgba(34,197,94,.45);background:rgba(20,83,45,.25)}.error{border-color:rgba(248,113,113,.5);background:rgba(127,29,29,.22)}
   </style>
 </head>
 <body>
@@ -34,6 +34,10 @@ function decodePayload(token){
   return JSON.parse(decodeURIComponent(escape(json)));
 }
 function esc(s){return String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function listHtml(items){
+  if(!items || !items.length) return '';
+  return `<ul>${items.slice(0,5).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+}
 const params = new URLSearchParams(location.search);
 const token = params.get('t');
 const app = document.getElementById('app');
@@ -45,17 +49,54 @@ if(!token){
     const payload = decodePayload(token);
     const reasons = payload.reasons && payload.reasons.length ? payload.reasons : [{code:'other', label:'Other reason'}];
     const reasonHtml = reasons.map(r => `<label class="reason"><input type="checkbox" name="reason" value="${esc(r.code)}"><span>${esc(r.label || r.code)}</span></label>`).join('');
+    const watchFlags = payload.watch_flags || [];
+    const fitFlags = payload.fit_flags || [];
+    const flagsHtml = (watchFlags.length || fitFlags.length) ? `
+      <div class="flag-box">
+        <h2>Hermes flags for this exact role</h2>
+        ${watchFlags.length ? `<p class="notice" style="margin:0 0 8px">Watch-outs from the email/check flags:</p>${listHtml(watchFlags)}` : ''}
+        ${fitFlags.length ? `<p class="notice" style="margin:12px 0 8px">Why it was shown:</p>${listHtml(fitFlags)}` : ''}
+      </div>` : '';
     app.innerHTML = `
       <span class="eyebrow">Not suitable</span>
       <h1 class="job-title">Why is this not suitable?</h1>
       <p class="job-meta">${esc(payload.title || 'Untitled job')} · ${esc(payload.company || 'Unknown company')}</p>
-      <form method="post" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}">
+      ${flagsHtml}
+      <form id="feedback-form" method="post" target="rolesignal-feedback-sink" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}">
+        <p class="notice">Suggested reasons are generated from this loaded role's title, company, description, source, and Hermes watch-outs.</p>
         <div class="reason-list">${reasonHtml}</div>
         <p class="notice">Optional note, especially if you choose Other:</p>
         <textarea name="other_text" placeholder="Write a short reason..."></textarea>
-        <div class="actions" style="justify-content:stretch;margin-top:18px"><button class="button primary" style="width:100%;border:0" type="submit">Send feedback</button></div>
+        <div class="actions" style="justify-content:stretch;margin-top:18px"><button id="send-button" class="button primary" style="width:100%;border:0" type="submit">Send feedback</button></div>
       </form>
-      <p class="notice" style="margin-top:16px">The form is hosted on GitHub Pages. Submitting sends the feedback to Hermes so future Jamie scans can suppress this job and lightly penalize similar roles.</p>`;
+      <iframe name="rolesignal-feedback-sink" id="rolesignal-feedback-sink" title="feedback submit target" style="display:none"></iframe>
+      <p id="submit-status" class="notice" style="margin-top:16px">Submitting sends the feedback to Hermes without leaving this page, so future Jamie scans can suppress this job and lightly penalize similar roles.</p>`;
+    const form = document.getElementById('feedback-form');
+    const button = document.getElementById('send-button');
+    const status = document.getElementById('submit-status');
+    const frame = document.getElementById('rolesignal-feedback-sink');
+    let submitted = false;
+    form.addEventListener('submit', (event) => {
+      const checked = form.querySelectorAll('input[name="reason"]:checked').length;
+      const note = form.querySelector('textarea[name="other_text"]').value.trim();
+      if(!checked && !note){
+        event.preventDefault();
+        status.className = 'status error';
+        status.textContent = 'Pick at least one suggested reason or add a note first.';
+        return;
+      }
+      submitted = true;
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      status.className = 'status';
+      status.textContent = 'Sending feedback to Hermes...';
+    });
+    frame.addEventListener('load', () => {
+      if(!submitted) return;
+      status.className = 'status success';
+      status.textContent = 'Feedback saved. This job will be suppressed and similar roles will be adjusted in future scans. You can close this page.';
+      button.textContent = 'Feedback sent';
+    });
   } catch(e) {
     app.classList.add('error');
     app.innerHTML = '<span class="eyebrow">Invalid link data</span><h1 class="job-title">This feedback link could not be read.</h1><p class="notice">Please use the latest RoleSignal email draft.</p>';
