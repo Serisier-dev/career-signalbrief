@@ -40,6 +40,7 @@ function listHtml(items){
 }
 const params = new URLSearchParams(location.search);
 const token = params.get('t');
+const action = params.get('action');
 const app = document.getElementById('app');
 if(!token){
   app.classList.add('error');
@@ -47,6 +48,37 @@ if(!token){
 } else {
   try {
     const payload = decodePayload(token);
+    if(action === 'pass'){
+      app.innerHTML = `
+        <span class="eyebrow">Passed for now</span>
+        <h1 class="job-title">We'll skip this one tomorrow.</h1>
+        <p class="job-meta">${esc(payload.title || 'Untitled job')} · ${esc(payload.company || 'Unknown company')}</p>
+        <p class="notice">Pass hides this exact job from the next email. It does not teach the algorithm that similar roles are bad.</p>
+        <form id="feedback-form" method="post" target="rolesignal-feedback-sink" action="${API_BASE}/feedback?t=${encodeURIComponent(token)}">
+          <input type="hidden" name="reason" value="pass">
+          <div class="actions" style="justify-content:stretch;margin-top:18px"><button id="send-button" class="button primary" style="width:100%;border:0" type="submit">Confirm pass</button></div>
+        </form>
+        <iframe name="rolesignal-feedback-sink" id="rolesignal-feedback-sink" title="feedback submit target" style="display:none"></iframe>
+        <p id="submit-status" class="notice" style="margin-top:16px">Click once to save the pass without leaving this page.</p>`;
+      const form = document.getElementById('feedback-form');
+      const button = document.getElementById('send-button');
+      const status = document.getElementById('submit-status');
+      const frame = document.getElementById('rolesignal-feedback-sink');
+      let submitted = false;
+      form.addEventListener('submit', () => {
+        submitted = true;
+        button.disabled = true;
+        button.textContent = 'Saving...';
+        status.className = 'status';
+        status.textContent = 'Saving pass to Hermes...';
+      });
+      frame.addEventListener('load', () => {
+        if(!submitted) return;
+        status.className = 'status success';
+        status.textContent = 'Pass saved. This exact job will be kept out of the next email cycle.';
+        button.textContent = 'Pass saved';
+      });
+    } else {
     const reasons = payload.reasons && payload.reasons.length ? payload.reasons : [{code:'other', label:'Other reason'}];
     const reasonHtml = reasons.map(r => `<label class="reason"><input type="checkbox" name="reason" value="${esc(r.code)}"><span>${esc(r.label || r.code)}</span></label>`).join('');
     const watchFlags = payload.watch_flags || [];
@@ -94,9 +126,10 @@ if(!token){
     frame.addEventListener('load', () => {
       if(!submitted) return;
       status.className = 'status success';
-      status.textContent = 'Feedback saved. This job will be suppressed and similar roles will be adjusted in future scans. You can close this page.';
+      status.textContent = 'Feedback saved. This job will be demoted and similar roles will be adjusted in future scans. You can close this page.';
       button.textContent = 'Feedback sent';
     });
+    }
   } catch(e) {
     app.classList.add('error');
     app.innerHTML = '<span class="eyebrow">Invalid link data</span><h1 class="job-title">This feedback link could not be read.</h1><p class="notice">Please use the latest RoleSignal email draft.</p>';
