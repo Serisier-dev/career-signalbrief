@@ -1,13 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="160" viewBox="0 0 720 160" role="img" aria-labelledby="title desc">
   <title id="title">RoleSignal</title>
-  <desc id="desc">Clean RoleSignal wordmark with signal bars.</desc>
-  <rect width="720" height="160" rx="0" fill="none"/>
+  <desc id="desc">RoleSignal wordmark with a SignalBrief-style gradient icon and white text.</desc>
+  <defs>
+    <linearGradient id="markBase" x1="20" y1="24" x2="132" y2="136" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4057ff"/>
+      <stop offset="0.48" stop-color="#eb4a8a"/>
+      <stop offset="1" stop-color="#ff9e43"/>
+    </linearGradient>
+    <radialGradient id="markGlow" cx="34" cy="24" r="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8fa0ff" stop-opacity="0.9"/>
+      <stop offset="0.42" stop-color="#4057ff" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#101828" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
   <g transform="translate(24 24)">
-    <rect x="0" y="0" width="112" height="112" rx="28" fill="#5266ff"/>
-    <circle cx="36" cy="80" r="8" fill="#ffffff"/>
-    <rect x="52" y="65" width="12" height="28" rx="6" fill="#ffffff"/>
-    <rect x="70" y="47" width="12" height="46" rx="6" fill="#ffffff"/>
-    <rect x="88" y="28" width="12" height="65" rx="6" fill="#ffffff"/>
+    <rect width="112" height="112" rx="32" fill="url(#markBase)"/>
+    <rect width="112" height="112" rx="32" fill="url(#markGlow)"/>
+    <path d="M30 72c16-26 39-40 66-42" fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" opacity="0.98"/>
+    <path d="M36 86c14-17 32-26 54-28" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.78"/>
+    <circle cx="30" cy="92" r="7" fill="#ffffff" opacity="0.98"/>
   </g>
-  <text x="164" y="102" font-family="Inter, Arial, Helvetica, sans-serif" font-size="74" font-weight="800" letter-spacing="-3" fill="#ffffff">RoleSignal</text>
+  <text x="164" y="103" font-family="Inter, Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="76" font-weight="900" letter-spacing="-4.2" fill="#ffffff">RoleSignal</text>
 </svg>
