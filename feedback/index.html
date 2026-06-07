@@ -95,7 +95,7 @@ if(!token){
         <div class="actions" style="justify-content:stretch;margin-top:18px"><button id="send-button" class="button primary" style="width:100%;border:0" type="submit">Send feedback</button></div>
       </form>
       <iframe name="rolesignal-feedback-sink" id="rolesignal-feedback-sink" title="feedback submit target" style="display:none"></iframe>
-      <p id="submit-status" class="notice" style="margin-top:16px">Submitting sends the feedback to Hermes without leaving this page, so future Jamie scans can suppress this job and lightly penalize similar roles.</p>`;
+      <p id="submit-status" class="notice" style="margin-top:16px">Submitting sends the feedback to Hermes without leaving this page, so future Jamie scans can keep this exact job out and lightly penalize similar roles.</p>`;
     const form = document.getElementById('feedback-form');
     const button = document.getElementById('send-button');
     const status = document.getElementById('submit-status');
@@ -119,7 +119,7 @@ if(!token){
     frame.addEventListener('load', () => {
       if(!submitted) return;
       status.className = 'status success';
-      status.textContent = 'Feedback saved. This job will be demoted and similar roles will be adjusted in future scans. You can close this page.';
+      status.textContent = 'Feedback saved. This exact job will be kept out and similar roles will be adjusted in future scans. You can close this page.';
       button.textContent = 'Feedback sent';
     });
     }
